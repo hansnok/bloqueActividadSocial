@@ -14,15 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Version details
  *
- * @package    block_newblock
- * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @package    actividas_social
+ * @copyright  
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
-$plugin->version   = 2015050601;        // The current plugin version (Date: YYYYMMDDXX)
-$plugin->requires  = 2013110500;        // Requires this Moodle version
-$plugin->component = 'block_actividadsocial'; // Full name of the plugin (used for diagnostics)
 
-  
+if ($ADMIN->fulltree) {
+	$settings->add(new admin_setting_configmulticheckbox('block_actividad_social_modules',
+			'Módulos locales activos',
+			'Lista de módulos locales activos.',
+			array(
+					'actividad_social' => 1),
+			array(
+					'actividad_social'=>'local/actividadSocial')
+			));
+}
