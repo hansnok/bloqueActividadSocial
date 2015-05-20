@@ -58,14 +58,18 @@ class block_social extends block_base {
 			$lastquiz = $DB->get_records_sql($sql_quiz, $params);
 			
 			// Traer los recursos
-			$sql_resources = "SELECT *
+			$sql_resources = "SELECT log.id, r.name, us.firstname, us.lastname, log.timecreated
 						 	FROM {course_modules} as cm INNER JOIN {modules} as m ON (cm.module = m.id) 
 						   		INNER JOIN {resource} as r ON (r.course = cm.course)
+								INNER JOIN {logstore_standard_log} as log ON (log.objectid = r.id)
+								INNER JOIN {user} as us ON (us.id = log.userid)
 						 	WHERE m.name in ('resource')
+								AND log.objecttable = 'resource'
 								AND cm.visible = ? 
     							AND m.visible = ?
     							AND cm.course = ?
-    					  	ORDER BY m.name DESC LIMIT 5";
+    					  	ORDER BY log.timecreated DESC, log.id 
+							LIMIT 5";
 			$lastresources = $DB->get_records_sql($sql_resources, $params);
 			
 			// Creación de tabla que muestra las últimas 5 tareas enviadas
@@ -84,11 +88,21 @@ class block_social extends block_base {
 				$table_quiz->data[] = array($quiz->name,$quiz->firstname." ".$quiz->lastname, $timefinish);
 			}
 			
+			// Creación de tabla que muestra los ultimos 5 archivos descargados
+			$table_resource = new html_table();
+			$table_resource->head = array('Resource', '', '');
+			foreach($lastresources as $resource){
+				$timefinish = date('d-m-Y  H:i',$resource->timecreated);
+				$table_resource->data[] = array($resource->name,$resource->firstname." ".$resource->lastname, $timefinish);
+			}
 					
-			$lookassign = new moodle_url('local/actividadSocial/index.php', array('action'=>'assign'));
-			$lookquiz = new moodle_url('local/actividadSocial/index.php', array('action'=>'quiz'));
+			$lookassign = new moodle_url('../local/actividadSocial/index.php', array('action'=>'assign', 'cmid'=>$course->id));
+			$lookquiz = new moodle_url('../local/actividadSocial/index.php', array('action'=>'quiz', 'cmid'=>$course->id));
+			$lookresource = new moodle_url('../local/actividadSocial/index.php', array('action'=>'resource', 'cmid'=>$course->id));
+			
 			$this->content->text = html_writer::table($table_assign).$OUTPUT->single_button($lookassign,"See more").
-									"".html_writer::table($table_quiz).$OUTPUT->single_button($lookquiz,"See more");;
+									"".html_writer::table($table_quiz).$OUTPUT->single_button($lookquiz,"See more").
+									"".html_writer::table($table_resource).$OUTPUT->single_button($lookresource,"See more");
 			$this->content->footer = "";
 			
 			return $this->content;
