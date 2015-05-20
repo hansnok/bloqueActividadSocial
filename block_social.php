@@ -15,12 +15,15 @@ class block_social extends block_base {
 
 	// Función que genera el contenido del bloque
 	function get_content() {
+		global $OUTPUT;
 		if ($this->content !== NULL) {
 			return $this->content;
 		}
 	
 		$this->content = new stdClass;
-		$this->content->text = $this->config->text;
+		$redirecturl = new moodle_url('local/actividadSocial/index.php', array('action'=>'agregar'));
+		//$this->content->text = $this->config->text;
+		$this->content->text = $OUTPUT->single_button($redirecturl,"Ver más");
 		$this->content->footer = '';
 	
 		return $this->content;
