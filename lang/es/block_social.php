@@ -16,7 +16,6 @@
 // along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 
 /**
- *
  * @package actividad_social
  * @copyright 2015 Hans Jeria (hansjeria@gmail.com)
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,5 +23,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-//example
-$string['enabledock'] = 'Allow the user to dock this block';
+$string['socac']= 'Actividad Social';
+$string['resources']= 'Archivos Descargados';
+$string['assign']= 'Tarea enviadas';
+$string['quiz']= "Quiz Terminados";
+$string['seemore']= "Ver más";

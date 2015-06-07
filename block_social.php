@@ -16,8 +16,6 @@
 
 
 /**
- *
-*
 * @package    local
 * @subpackage actividadSocial
 * @copyright  2015  Hans Jeria
@@ -28,8 +26,8 @@ class block_social extends block_base {
 
 	// Inicializa el bloque
 	function init() {
-		$this->title = "Actividad Social";
-		$this->version = 2015050601;
+		$this->title = get_string('socac','block_social');
+		$this->version = 2015060701;
 	}
 
 	// Función que genera el contenido del bloque
@@ -93,7 +91,7 @@ class block_social extends block_base {
 			
 			// Creación de tabla que muestra las últimas 5 tareas enviadas
 			$table_assign = new html_table();
-			$table_assign->head = array('Assing', '', '');
+			$table_assign->head = array(get_string('assign','block_social'));
 			foreach($lastassings as $assing){
 				$timefinish = date('d-m-Y  H:i',$assing->timemodified);
 				$table_assign->data[] = array($assing->name,$assing->firstname." ".$assing->lastname, $timefinish);
@@ -101,7 +99,7 @@ class block_social extends block_base {
 			
 			// Creación de tabla que muestra los ultimos 5 quiz
 			$table_quiz = new html_table();
-			$table_quiz->head = array('Quiz', '', '');
+			$table_quiz->head = array(get_string('quiz','block_social'));
 			foreach($lastquiz as $quiz){
 				$timefinish = date('d-m-Y  H:i',$quiz->timefinish);
 				$table_quiz->data[] = array($quiz->name,$quiz->firstname." ".$quiz->lastname, $timefinish);
@@ -109,7 +107,7 @@ class block_social extends block_base {
 			
 			// Creación de tabla que muestra los ultimos 5 archivos descargados
 			$table_resource = new html_table();
-			$table_resource->head = array('Resource', '', '');
+			$table_resource->head = array(get_string('resources','block_social'));
 			foreach($lastresources as $resource){
 				$timefinish = date('d-m-Y  H:i',$resource->timecreated);
 				$table_resource->data[] = array($resource->name,$resource->firstname." ".$resource->lastname, $timefinish);
@@ -119,9 +117,9 @@ class block_social extends block_base {
 			$lookquiz = new moodle_url('../local/actividadsocial/index.php', array('action'=>'quiz', 'cmid'=>$course->id));
 			$lookresource = new moodle_url('../local/actividadsocial/index.php', array('action'=>'resource', 'cmid'=>$course->id));
 			
-			$this->content->text = html_writer::table($table_assign).$OUTPUT->single_button($lookassign,"See more").
-									"".html_writer::table($table_quiz).$OUTPUT->single_button($lookquiz,"See more").
-									"".html_writer::table($table_resource).$OUTPUT->single_button($lookresource,"See more");
+			$this->content->text = html_writer::table($table_assign).$OUTPUT->single_button($lookassign,get_string('seemore','block_social')).
+									html_writer::table($table_quiz).$OUTPUT->single_button($lookquiz,get_string('seemore','block_social')).
+									html_writer::table($table_resource).$OUTPUT->single_button($lookresource,get_string('seemore','block_social'));
 			$this->content->footer = "";
 			
 			return $this->content;

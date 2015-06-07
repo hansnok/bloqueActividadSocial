@@ -24,5 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-//example
-$string['enabledock'] = 'Allow the user to dock this block';
+$string['socac']= 'Social Activity';
+$string['resources']= 'Downloaded resources';
+$string['assign']= 'Sent assign';
+$string['quiz'] = "Completed Quiz";
+$string['seemore'] = "See more";
