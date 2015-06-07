@@ -16,8 +16,8 @@
 /**
  * Version details
  *
- * @package    block_newblock
- * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @package    block_social
+ * @copyright  2015 Hans Jeria (hansjeria@gmail.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

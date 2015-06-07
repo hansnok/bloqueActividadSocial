@@ -1,9 +1,28 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+
 /**
- * Clase que define los links a funcionalidades propias del bloque actividad_social
- * @author 2015 Hans Jeria (hansjeria@gmail.com)
  *
- */
+*
+* @package    local
+* @subpackage actividadSocial
+* @copyright  2015  Hans Jeria
+* @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+*/
 
 class block_social extends block_base {
 
@@ -96,9 +115,9 @@ class block_social extends block_base {
 				$table_resource->data[] = array($resource->name,$resource->firstname." ".$resource->lastname, $timefinish);
 			}
 					
-			$lookassign = new moodle_url('../local/actividadSocial/index.php', array('action'=>'assign', 'cmid'=>$course->id));
-			$lookquiz = new moodle_url('../local/actividadSocial/index.php', array('action'=>'quiz', 'cmid'=>$course->id));
-			$lookresource = new moodle_url('../local/actividadSocial/index.php', array('action'=>'resource', 'cmid'=>$course->id));
+			$lookassign = new moodle_url('../local/actividadsocial/index.php', array('action'=>'assign', 'cmid'=>$course->id));
+			$lookquiz = new moodle_url('../local/actividadsocial/index.php', array('action'=>'quiz', 'cmid'=>$course->id));
+			$lookresource = new moodle_url('../local/actividadsocial/index.php', array('action'=>'resource', 'cmid'=>$course->id));
 			
 			$this->content->text = html_writer::table($table_assign).$OUTPUT->single_button($lookassign,"See more").
 									"".html_writer::table($table_quiz).$OUTPUT->single_button($lookquiz,"See more").
