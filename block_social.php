@@ -66,15 +66,17 @@ class block_social extends block_base {
 			$lastassings = $DB->get_records_sql($sql_assing, $params);
 			
 			//Trae la informacion de los ultimos 5 quizes terminados
-			$sql_quiz = "SELECT qatt.id, q.name, us.firstname, us.lastname, qatt.timestart, qatt.timefinish
+			$sql_quiz = "SELECT qatt.id, q.name, us.firstname, us.lastname, qatt.timestart, qatt.timefinish, q.grade, qg.grade as getgrade
 						 	FROM {course_modules} as cm INNER JOIN {modules} as m ON (cm.module = m.id) 
 						   		INNER JOIN {quiz} as q ON (q.course = cm.course) 
     					   		INNER JOIN {quiz_attempts} as qatt ON ( qatt.quiz = q.id) 
     							INNER JOIN {user} as us ON (us.id = qatt.userid) 
+								INNER JOIN {quiz_grades} as qg ON (qg.userid = us.id)
 						 	WHERE m.name in ('quiz')
 								AND cm.visible = ? 
     							AND m.visible = ?
     							AND cm.course = ?
+							GROUP BY qatt.id
     					  	ORDER BY qatt.timefinish DESC, qatt.id
 							LIMIT 5";
 			// Consulta a la base de datos
@@ -112,8 +114,10 @@ class block_social extends block_base {
 			$table_quiz->head = array(get_string('quiz','block_social'));
 			// Se recore la informacion obtenida sobre lps ultimas quizes terminados para llenar la tabla
 			foreach($lastquiz as $quiz){
-				$timefinish = date('d-m-Y  H:i',$quiz->timefinish);
-				$table_quiz->data[] = array($quiz->name,$quiz->firstname." ".$quiz->lastname, $timefinish);
+				if($quiz->getgrade >= ($quiz->grade)/2){
+					$timefinish = date('d-m-Y  H:i',$quiz->timefinish);
+					$table_quiz->data[] = array($quiz->name,$quiz->firstname." ".$quiz->lastname,intval($quiz->getgrade)."/".intval($quiz->grade),$timefinish);
+				}
 			}
 			
 			// Se crea la tabla que muestra la informacion de los ultimos 5 recursos descargados
